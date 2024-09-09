@@ -14,12 +14,7 @@ return new class extends Migration
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
-
-            $table->foreign('user_id')              // Definizione della chiave esterna
-                ->references('id')                // Riferimento alla colonna id della tabella users
-                ->on('users')                     // Tabella di riferimento
-                ->onDelete('cascade');    // Opzionale: elimina i ristoranti se l'utente viene eliminato
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Assicura che sia una foreign key
 
             $table->string('companyName', 20)->unique();
             $table->string('address', 30);

@@ -1,9 +1,6 @@
-import './bootstrap';
+import "./bootstrap";
 
-import Alpine from 'alpinejs';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
-
-window.Alpine = Alpine;
-
-Alpine.start();
+import "bootstrap";
+import "~resources/scss/app.scss";
+import * as bootstrap from "bootstrap";
+import.meta.glob(["../img/**"]);
