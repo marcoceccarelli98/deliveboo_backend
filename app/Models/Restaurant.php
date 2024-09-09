@@ -19,8 +19,21 @@ class Restaurant extends Model
         'slug',
     ];
 
+    //Relazione One to One con User
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    //Relazione Many to Many con Type
+    public function types()
+    {
+        return $this->BelongsToMany(Type::class);
+    }
+
+    //Relazione One to Many con Dish
+    public function dishes()
+    {
+        return $this->hasMany(Dish::class);
     }
 }
