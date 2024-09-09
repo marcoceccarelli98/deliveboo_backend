@@ -9,8 +9,15 @@ class Order extends Model
 {
     use HasFactory;
 
+    //Relazione One to Many con Restaurant
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    //Relazione Many to Many con Dish
+    public function dishes()
+    {
+        return $this->BelongsToMany(Dish::class);
     }
 }
