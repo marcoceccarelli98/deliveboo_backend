@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Requests\Auth\UpdateDishRequest;
 use App\Http\Requests\Auth\StoreDishRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Dish;
 use App\Models\Restaurant;
+use Illuminate\Support\Str;
+
 
 class DishController extends Controller
 {
@@ -15,9 +18,8 @@ class DishController extends Controller
      */
     public function index()
     {
-        $dishes= Dish::all();
+        $dishes = Dish::all();
         return view('admin.dish.index', compact('dishes'));
-
     }
 
     /**
@@ -25,8 +27,8 @@ class DishController extends Controller
      */
     public function create()
     {
-        $restaurant= Restaurant::all();
-        return view('admin.dish.create', compact('restaurants'));
+
+        return view('admin.dishes.create');
     }
 
     /**
@@ -36,15 +38,18 @@ class DishController extends Controller
     {
         $data = $request->validated();
         // $data['slug'] = Str::of($data['title'])->slug();
-        $dish= new Dish();
+        $dish = new Dish();
 
+        $dish->restaurant_id = auth()->user()->restaurant->id;
         $dish->name = $data['name'];
         $dish->description = $data['description'];
         $dish->price = $data['price'];
         $dish->visibility = $data['visibility'];
+        $dish->slug = Str::slug($request->companyName, '-');
+        $dish->path_img = 'abc';
         $dish->save();
 
-        return redirect(route('admin.dish.index'))->with('message', 'Piatto modificato correttamente');
+        return redirect(route('dashboard'))->with('message', 'Piatto modificato correttamente');
     }
 
     /**
@@ -52,7 +57,7 @@ class DishController extends Controller
      */
     public function show(string $slug)
     {
-        $dish= Dish::where('slug',$slug)->first();
+        $dish = Dish::where('slug', $slug)->first();
         return view('admin.dish.show', compact('dish'));
     }
 
@@ -61,9 +66,10 @@ class DishController extends Controller
      */
     public function edit(Dish $dish)
     {
-        
-        return view('admin.dish.edit', compact('dish'));
+        // Il parametro $dish viene automaticamente risolto da Eloquent usando il campo 'slug'
+        return view('admin.dishes.edit', compact('dish'));
     }
+
 
     /**
      * Update the specified resource in storage.

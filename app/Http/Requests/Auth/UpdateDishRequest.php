@@ -12,8 +12,6 @@ class UpdateDishRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-
-
     }
 
     /**
@@ -24,11 +22,11 @@ class UpdateDishRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
-            'name' => ['required','max:20'],
+
+            'name' => ['required', 'max:20'],
             'description' => ['required'],
-            'price' => ['required','numeric','max:999'],
-            'visibility'=>['required','boolean'],
+            'price' => ['required', 'numeric', 'between:0,999.99'], // 'numeric' e 'between' sono usati per i numeri decimali
+            'visibility' => ['required', 'boolean'],
 
             /*inserire immagine*/
         ];
