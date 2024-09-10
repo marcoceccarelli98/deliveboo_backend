@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\DishController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +17,11 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-// Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return redirect()->route('dashboard');
+})->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // PROFILE
@@ -31,20 +29,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-    // DASHBOARD
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     // RESTAURANTS
-    Route::resource('restaurants', RestaurantController::class)->parameters(
-        [
-            'restaurants' => 'restaurant:slug'
-        ]
-    );
+    // Route::resource('restaurants', RestaurantController::class)->parameters(
+    //     [
+    //         'restaurants' => 'restaurant:slug'
+    //     ]
+    // );
 
     Route::get('/restaurant', [RestaurantController::class, 'edit'])->name('restaurant.edit');
     Route::patch('/restaurant', [RestaurantController::class, 'update'])->name('restaurant.update');
-    Route::delete('/restaurant', [RestaurantController::class, 'destroy'])->name('restaurant.destroy');
+    // Route::delete('/restaurant', [RestaurantController::class, 'destroy'])->name('restaurant.destroy');
 
     // DISHES
     Route::resource('dishes', DishController::class)->parameters(
@@ -53,10 +47,10 @@ Route::middleware('auth')->group(function () {
         ]
     );
 
-    Route::get('/dish', [RestaurantController::class, 'create'])->name('dish.create');
-    Route::get('/dish', [RestaurantController::class, 'edit'])->name('dish.edit');
-    Route::patch('/dish', [RestaurantController::class, 'update'])->name('dish.update');
-    Route::delete('/dish', [RestaurantController::class, 'destroy'])->name('dish.destroy');
+    Route::get('/dish/create', [DishController::class, 'create'])->name('dish.create');
+    Route::get('/dish/{dish}/edit', [DishController::class, 'edit'])->name('dish.edit');
+    Route::patch('/dish/{dish}', [DishController::class, 'update'])->name('dish.update');
+    Route::delete('/dish/{dish}', [DishController::class, 'destroy'])->name('dish.destroy');
 });
 
 require __DIR__ . '/auth.php';
