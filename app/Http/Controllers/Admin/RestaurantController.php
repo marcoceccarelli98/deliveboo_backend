@@ -67,19 +67,19 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $restaurant = Restaurant::findOrFail($id);
+        $restaurant = auth()->user()->restaurant;
 
         $validated = $request->validate([
             'companyName' => 'required|max:20',
-            'address' => 'required|max 30',
+            'address' => 'required|max:30',
             'pIva' => 'required|size:11',
         ]);
 
         $restaurant->update($validated);
 
-        return redirect()->route('restaurants.show', $restaurant->slug)->with('success', 'Ristorante aggiornato con successo.');
+        return redirect()->route('dashboard')->with('success', 'Ristorante aggiornato con successo.');
     }
 
 
