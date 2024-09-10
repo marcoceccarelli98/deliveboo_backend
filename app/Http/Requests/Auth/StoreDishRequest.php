@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DishRequest extends FormRequest
+class StoreDishRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,6 +12,8 @@ class DishRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+
+
     }
 
     /**
@@ -25,8 +27,9 @@ class DishRequest extends FormRequest
             
             'name' => ['required','max:20'],
             'description' => ['required'],
-            'price' => ['required'],
-            'visibility'=>['required'],
+            'price' => ['required','numeric','max:999'],
+            'visibility'=>['required','boolean'],
+
             /*inserire immagine*/
         ];
     }

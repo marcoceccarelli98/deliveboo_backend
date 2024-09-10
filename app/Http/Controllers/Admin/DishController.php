@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Http\Requests\Auth\UpdateDishRequest;
+use App\Http\Requests\Auth\StoreDishRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Dish;
@@ -31,9 +32,19 @@ class DishController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDishRequest $request)
     {
-        //
+        $data = $request->validated();
+        // $data['slug'] = Str::of($data['title'])->slug();
+        $dish= new Dish();
+
+        $dish->name = $data['name'];
+        $dish->description = $data['description'];
+        $dish->price = $data['price'];
+        $dish->visibility = $data['visibility'];
+        $dish->save();
+
+        return redirect(route('admin.dish.index'))->with('message', 'Piatto modificato correttamente');
     }
 
     /**
@@ -50,23 +61,34 @@ class DishController extends Controller
      */
     public function edit(Dish $dish)
     {
-
+        
         return view('admin.dish.edit', compact('dish'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateDishRequest $request, Dish $dish)
     {
-        //
+        $data = $request->validated();
+        // $data['slug'] = Str::of($data['title'])->slug();
+
+        $dish->name = $data['name'];
+        $dish->description = $data['description'];
+        $dish->price = $data['price'];
+        $dish->visibility = $data['visibility'];
+        $dish->save();
+
+        return redirect(route('admin.dish.index'))->with('message', 'Piatto modificato correttamente');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Dish $dish)
     {
-        //
+        $dish->delete();
+
+        return redirect()->route('admin.dish.index')->with('message', 'piatto eliminato correttamente');
     }
 }
