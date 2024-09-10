@@ -80,7 +80,7 @@
                                 <div class="col-md-6">
                                     <input id="companyName" type="text"
                                         class="form-control @error('companyName') is-invalid @enderror" name="companyName"
-                                        value="{{ old('companyName') }}" required>
+                                        value="{{ old('companyName') }}" required maxlength="20">
 
                                     @error('companyName')
                                         <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
                                 <div class="col-md-6">
                                     <input id="city" type="text"
                                         class="form-control @error('city') is-invalid @enderror" name="city"
-                                        value="{{ old('city') }}" required>
+                                        value="{{ old('city') }}" required maxlength="20">
 
                                     @error('city')
                                         <span class="invalid-feedback" role="alert">
@@ -116,7 +116,7 @@
                                 <div class="col-md-6">
                                     <input id="address" type="text"
                                         class="form-control @error('address') is-invalid @enderror" name="address"
-                                        value="{{ old('address') }}" required>
+                                        value="{{ old('address') }}" required maxlength="30">
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
@@ -132,9 +132,10 @@
                                     class="col-md-4 col-form-label text-md-right">{{ __('PIVA') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="pIva" type="text"
+                                    <input id="pIva" type="number"
                                         class="form-control @error('pIva') is-invalid @enderror" name="pIva"
-                                        value="{{ old('pIva') }}" required>
+                                        value="{{ old('pIva') }}" required minlength="11" maxlength="11" pattern="\d{11}"
+                                        inputmode="numeric">
 
                                     @error('pIva')
                                         <span class="invalid-feedback" role="alert">
