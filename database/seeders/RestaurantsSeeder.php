@@ -15,7 +15,7 @@ class RestaurantsSeeder extends Seeder
      */
     public function run(): void
     {
-        
+
         $newRestaurant = new Restaurant();
         $newRestaurant->id = 1;
         $newRestaurant->user_id = 1;
@@ -23,7 +23,7 @@ class RestaurantsSeeder extends Seeder
         $newRestaurant->address = "Via Roma, 25";
         $newRestaurant->pIva = "12345678901";
         $newRestaurant->city = "Milano";
-        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug();
+        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug('-');
         $newRestaurant->save();
 
         $newRestaurant = new Restaurant();
@@ -33,7 +33,7 @@ class RestaurantsSeeder extends Seeder
         $newRestaurant->address = "Corso Garibaldi, 98";
         $newRestaurant->pIva = "98765432102";
         $newRestaurant->city = "Napoli";
-        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug();
+        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug('-');
         $newRestaurant->save();
 
         $newRestaurant = new Restaurant();
@@ -43,9 +43,9 @@ class RestaurantsSeeder extends Seeder
         $newRestaurant->address = "Piazza San Marco, 12";
         $newRestaurant->pIva = "23456789012";
         $newRestaurant->city = "Firenze";
-        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug();
+        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug('-');
         $newRestaurant->save();
-    
+
         $newRestaurant = new Restaurant();
         $newRestaurant->id = 4;
         $newRestaurant->user_id = 4;
@@ -53,7 +53,7 @@ class RestaurantsSeeder extends Seeder
         $newRestaurant->address = "Via del Mare, 45";
         $newRestaurant->pIva = "34567890123";
         $newRestaurant->city = "Genova";
-        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug();
+        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug('-');
         $newRestaurant->save();
 
         $newRestaurant = new Restaurant();
@@ -63,8 +63,7 @@ class RestaurantsSeeder extends Seeder
         $newRestaurant->address = "Via delle Rose, 7";
         $newRestaurant->pIva = "45678901234";
         $newRestaurant->city = "Roma";
-        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug();
+        $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug('-');
         $newRestaurant->save();
-    
     }
 }
