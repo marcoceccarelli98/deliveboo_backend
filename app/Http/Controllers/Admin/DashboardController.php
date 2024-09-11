@@ -9,12 +9,15 @@ use App\Models\Dish;
 class DashboardController extends Controller
 //passaggio rotta al controller
 {
-    public function index()
-    {
-        // Recupera tutti i piatti dal database
-        $dishes = Dish::all(); // Oppure, per la paginazione, puoi usare Dish::paginate(10);
+   public function index()
+{
+    // Recupera il ristorante associato all'utente autenticato
+    $restaurant = auth()->user()->restaurant;
 
-        // Passa i piatti alla vista
-        return view('admin.dashboard', compact('dishes'));
-    }
+    // Recupera solo i piatti associati al ristorante dell'utente
+    $dishes = Dish::where('restaurant_id', $restaurant->id)->get();
+
+    // Passa i piatti alla vista
+    return view('admin.dashboard', compact('dishes'));
+}
 }
