@@ -25,7 +25,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        $types=Type::all();
+        $types = Type::all();
         return view('admin.restaurants.create', compact('types'));
     }
 
@@ -61,8 +61,8 @@ class RestaurantController extends Controller
     public function edit()
     {
         $restaurant = auth()->user()->restaurant;
-        $types=Type::all();
-        return view('admin.restaurants.edit', compact('restaurant','types'));
+        $types = Type::all();
+        return view('admin.restaurants.edit', compact('restaurant', 'types'));
     }
 
 
@@ -72,16 +72,21 @@ class RestaurantController extends Controller
     public function update(Request $request)
     {
         $restaurant = auth()->user()->restaurant;
-        
+
 
         $validated = $request->validate([
             'companyName' => 'required|max:20',
             'address' => 'required|max:30',
             'pIva' => 'required|size:11',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine
+            'types' => 'nullable|exists:types,id',
         ]);
 
         $restaurant->update($validated);
+
+        if (isset($validated['types'])) {
+            $restaurant->types()->sync($validated['types']);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Ristorante aggiornato con successo.');
     }
