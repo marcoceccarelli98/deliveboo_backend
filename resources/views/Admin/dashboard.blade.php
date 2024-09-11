@@ -1,28 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container text-center">
         <h1>DASHBOARD</h1>
-        <a href="{{ route('restaurant.edit') }}" class="btn btn-warning m-3">
-            Modifica Ristorante
-        </a>
+        <div>
+            <a href="{{ route('restaurant.edit') }}" class="btn btn-warning">
+                Modifica Ristorante
+            </a>
 
-        <a href="{{ route('dishes.create') }}" class="btn btn-success mb-3">
-            Aggiungi Nuovo Piatto
-        </a>
+            <a href="{{ route('dishes.create') }}" class="btn btn-success">
+                Aggiungi Nuovo Piatto
+            </a>
+        </div>
 
         @if ($dishes->isEmpty())
             <p>Non ci sono piatti disponibili.</p>
         @else
-            <ul>
-                @foreach ($dishes as $dish)
-                    <li>{{ $dish->name }} - {{ $dish->price }} €
-                        <a href="{{ route('dishes.edit', $dish->slug) }}" class="btn btn-warning m-3">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="d-flex">
+                <div class="row">
+                    @foreach ($dishes as $dish)
+                        <div class="col-4">
+                            <div class="card">
+                                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $dish->name }}</h5>
+                                    <h6 class="card-text">{{ $dish->price }} €</h6>
+                                    <a href="{{ route('dishes.edit', $dish->slug) }}" class="btn btn-primary"><i
+                                            class="fa-solid fa-pen"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         @endif
     </div>
 @endsection

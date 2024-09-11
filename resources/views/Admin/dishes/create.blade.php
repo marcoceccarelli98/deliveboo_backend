@@ -24,8 +24,6 @@
                     <input type="number" class="form-control" id="price" name="price"></input>
                 </div>
                 <div class="mb-3">
-                    <input type="checkbox" name="visibility">
-
                     <input type="radio" name="visibility" value="1"> Sì
                     <input type="radio" name="visibility" value="0"> No
                 </div>
