@@ -28,6 +28,17 @@
                     <input type="number" class="form-control" name="pIva" id="pIva"
                         value="{{ old('pIva', $restaurant->pIva) }}" required>
                 </div>
+                <div class="mb-3">
+                    <div class="mb-3">Tipologie ristorante</div>
+                    @foreach ($types as $type)
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="tec-{{ $type->id }}"
+                                value="{{ $type->id }}" name="types[]"
+                                {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="tec-{{ $type->id }}">{{ $type->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
 
                 <button type="submit" class="btn btn-primary">Aggiorna Ristorante</button>
             </form>

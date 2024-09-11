@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 
@@ -24,7 +25,8 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        return view('admin.restaurants.create');
+        $types=Type::all();
+        return view('admin.restaurants.create', compact('types'));
     }
 
     /**
@@ -59,8 +61,8 @@ class RestaurantController extends Controller
     public function edit()
     {
         $restaurant = auth()->user()->restaurant;
-
-        return view('admin.restaurants.edit', compact('restaurant'));
+        $types=Type::all();
+        return view('admin.restaurants.edit', compact('restaurant','types'));
     }
 
 
@@ -70,6 +72,7 @@ class RestaurantController extends Controller
     public function update(Request $request)
     {
         $restaurant = auth()->user()->restaurant;
+        
 
         $validated = $request->validate([
             'companyName' => 'required|max:20',
