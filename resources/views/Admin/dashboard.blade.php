@@ -3,7 +3,7 @@
 @section('content')
     <div class="container text-center">
         <h1>DASHBOARD</h1>
-        <div>
+        <div class="py-3">
             <a href="{{ route('restaurant.edit') }}" class="btn btn-warning">
                 Modifica Ristorante
             </a>
@@ -19,8 +19,8 @@
             <div class="d-flex">
                 <div class="row">
                     @foreach ($dishes as $dish)
-                        <div class="col-4">
-                            <div class="card">
+                        <div class="col-4 py-3">
+                            <div class="card bg-dark-subtle">
                                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $dish->name }}</h5>
