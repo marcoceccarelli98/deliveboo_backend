@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -134,8 +134,8 @@
                                 <div class="col-md-6">
                                     <input id="pIva" type="number"
                                         class="form-control @error('pIva') is-invalid @enderror" name="pIva"
-                                        value="{{ old('pIva') }}" required minlength="11" maxlength="11" pattern="\d{11}"
-                                        inputmode="numeric">
+                                        value="{{ old('pIva') }}" required minlength="11" maxlength="11"
+                                        pattern="\d{11}" inputmode="numeric">
 
                                     @error('pIva')
                                         <span class="invalid-feedback" role="alert">
