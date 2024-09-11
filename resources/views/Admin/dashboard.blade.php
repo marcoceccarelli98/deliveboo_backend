@@ -47,7 +47,7 @@
                 </div>
             </div>
             <!-- Modal -->
-            @if (isset($dish))
+            
                 <div class="modal" id="exampleModal" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -68,5 +68,5 @@
                         </div>
                     </div>
                 </div>
-            @endif
-        @endsection
+        @endif
+    @endsection
