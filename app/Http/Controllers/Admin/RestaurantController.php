@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 class RestaurantController extends Controller
@@ -69,23 +71,40 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request)
     {
         $restaurant = auth()->user()->restaurant;
 
-
-        $validated = $request->validate([
+        $data = $request->validate([
             'companyName' => 'required|max:20',
             'address' => 'required|max:30',
             'pIva' => 'required|size:11',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine
-            'types' => 'nullable|exists:types,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'types' => 'nullable|array|exists:types,id',
         ]);
 
-        $restaurant->update($validated);
+        // Gestione dell'immagine
+        if ($request->hasFile('image')) {
+            // Elimina la vecchia immagine se esiste
+            if ($restaurant->path_img) {
+                Storage::disk('public')->delete($restaurant->path_img);
+            }
 
-        if (isset($validated['types'])) {
-            $restaurant->types()->sync($validated['types']);
+            // Salva la nuova immagine
+            $data['path_img'] = $request->file('image')->store('restaurants', 'public');
+        }
+
+        // Aggiornamento dello slug se il nome dell'azienda è cambiato
+        if ($restaurant->companyName !== $data['companyName']) {
+            $data['slug'] = Str::slug($data['companyName']);
+        }
+
+        $restaurant->update($data);
+
+        // Sincronizza i tipi solo se sono presenti nella richiesta
+        if (isset($data['types'])) {
+            $restaurant->types()->sync($data['types']);
         }
 
         return redirect()->route('dashboard')->with('success', 'Ristorante aggiornato con successo.');

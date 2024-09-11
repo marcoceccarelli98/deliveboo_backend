@@ -46,7 +46,7 @@ class DishController extends Controller
         $dish->description = $data['description'];
         $dish->price = $data['price'];
         $dish->visibility = $data['visibility'];
-        $dish->slug = Str::slug($request->companyName, '-');
+        $dish->slug = Str::slug($request->name, '-');
 
         // Se un'immagine è stata caricata
         if ($request->hasFile('image')) {
@@ -84,15 +84,28 @@ class DishController extends Controller
     public function update(UpdateDishRequest $request, Dish $dish)
     {
         $data = $request->validated();
-        // $data['slug'] = Str::of($data['title'])->slug();
 
-        $dish->name = $data['name'];
-        $dish->description = $data['description'];
-        $dish->price = $data['price'];
-        $dish->visibility = $data['visibility'];
-        $dish->save();
+        // Gestione dell'immagine
+        if ($request->hasFile('image')) {
+            // Elimina la vecchia immagine se esiste
+            if ($dish->path_img) {
+                Storage::disk('public')->delete($dish->path_img);
+            }
 
-        return redirect(route('admin.dish.index'))->with('message', 'Piatto modificato correttamente');
+            // Salva la nuova immagine
+            $imagePath = $request->file('image')->store('dishes', 'public');
+            $dish->path_img = $imagePath; // Salviamo il percorso dell'immagine
+        }
+
+        // Aggiornamento dello slug se il nome è cambiato
+        if ($dish->name !== $data['name']) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        // Aggiornamento del piatto
+        $dish->update($data);
+
+        return redirect(route('dashboard'))->with('message', 'Piatto modificato correttamente');
     }
 
     /**

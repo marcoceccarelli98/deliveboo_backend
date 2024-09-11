@@ -3,6 +3,11 @@
 @section('content')
     <div class="container text-center">
         <h1>DASHBOARD</h1>
+
+        @if ($restaurant->path_img)
+            <img src="{{ asset('storage/' . $restaurant->path_img) }}" alt="{{ $restaurant->name }}" style="max-width: 300px;">
+        @endif
+
         <div class="d-flex justify-content-evenly">
             <a href="{{ route('restaurant.edit') }}" class="btn btn-warning">
                 Modifica Dati Ristorante
@@ -47,26 +52,25 @@
                 </div>
             </div>
             <!-- Modal -->
-            
-                <div class="modal" id="exampleModal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Are u sure u want to delete : {{ $dish->name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Abort</button>
-                                <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger"
-                                        type="submit">Delete</button>
-                                </form>
-                            </div>
+
+            <div class="modal" id="exampleModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Are u sure u want to delete : {{ $dish->name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Abort</button>
+                            <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger"
+                                    type="submit">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
         @endif
     @endsection

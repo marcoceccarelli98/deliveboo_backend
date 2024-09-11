@@ -10,7 +10,7 @@
         {{-- @include('shared.errors') --}}
 
         <section class="py-5">
-            <form action="{{ route('restaurant.update', $restaurant->id) }}" method="POST">
+            <form action="{{ route('restaurant.update', $restaurant->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="mb-3">
@@ -35,12 +35,27 @@
                     <label for="types">types : </label>
                     @foreach ($types as $type)
                         <div class="form-check form-check-inline">
-                            <input type="checkbox" name="types[]" class=" btn-check"
-                                id="type-{{ $type->id }}" value="{{ $type->id }}" autocomplete="off"
+                            <input type="checkbox" name="types[]" class=" btn-check" id="type-{{ $type->id }}"
+                                value="{{ $type->id }}" autocomplete="off"
                                 {{ $restaurant->types->contains($type->id) ? 'checked' : '' }}>
                             <label class="btn " for="type-{{ $type->id }}">{{ $type->name }}</label>
                         </div>
                     @endforeach
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="image">Immagine del ristorante</label>
+                    <input type="file" name="image" id="image"
+                        class="form-control @error('image') is-invalid @enderror">
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    @if ($restaurant->path_img)
+                        <div class="mt-2">
+                            <img src="{{ asset('storage/' . $restaurant->path_img) }}"
+                                alt="{{ $restaurant->companyName }}" style="max-width: 200px;">
+                        </div>
+                    @endif
                 </div>
 
                 <button type="submit" class="btn btn-primary my-5">Aggiorna Ristorante</button>
