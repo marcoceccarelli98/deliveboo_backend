@@ -33,10 +33,10 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
     public function store(Request $request): RedirectResponse
     {
-
-        $data =  $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -44,48 +44,45 @@ class RegisteredUserController extends Controller
             'city' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:30'],
             'pIva' => ['required', 'digits:11'],
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine
-            'types' => 'nullable|exists:types,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'types' => 'nullable|array|exists:types,id',
         ]);
 
-
-
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($data, $request) {
             // Creo il nuovo utente
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
             ]);
 
-
             if ($user) {
-
                 // Se un'immagine è stata caricata
                 $imagePath = $request->hasFile('image')
                     ? $request->file('image')->store('restaurants', 'public')
                     : null;
 
-                $user->restaurant()->create([
+                $restaurant = $user->restaurant()->create([
                     'user_id' => $user->id,
-                    'companyName' => $request->companyName,
-                    'city' => $request->city,
-                    'address' => $request->address,
-                    'pIva' => $request->pIva,
-                    'slug' => Str::slug($request->companyName, '-'),
-                    'path_img' => $imagePath, // Salviamo il percorso dell'immagine
+                    'companyName' => $data['companyName'],
+                    'city' => $data['city'],
+                    'address' => $data['address'],
+                    'pIva' => $data['pIva'],
+                    'slug' => Str::slug($data['companyName'], '-'),
+                    'path_img' => $imagePath,
                 ]);
 
-                if (isset($data['types'])) {
-                    $user->restaurant()->types()->attach($data['types']);
+                // Gestisci l'associazione dei types
+                if (isset($data['types']) && !empty($data['types'])) {
+                    $restaurant->types()->sync($data['types']);
                 }
             } else {
                 // Log l'errore o mostra un messaggio per il debug
-                dd('Utente non creato correttamente');
+                //Log::error('Utente non creato correttamente');
+                throw new \Exception('Utente non creato correttamente');
             }
 
             event(new Registered($user));
-            // event(new Registered($restaurant));
 
             Auth::login($user);
         });
