@@ -145,6 +145,12 @@
                                 </div>
                             </div>
 
+                            {{-- IMAGE --}}
+                            <div class="form-group">
+                                <label for="image">Immagine del piatto</label>
+                                <input type="file" name="image" class="form-control">
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

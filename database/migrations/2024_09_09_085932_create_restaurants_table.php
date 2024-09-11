@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('path_img', 255)->nullable();
             $table->string('slug', 30);
 
-
             $table->timestamps();
         });
     }
