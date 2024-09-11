@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Dish;
 
+
 class DashboardController extends Controller
 //passaggio rotta al controller
 {
