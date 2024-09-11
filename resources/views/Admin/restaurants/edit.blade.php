@@ -28,19 +28,22 @@
                     <input type="number" class="form-control" name="pIva" id="pIva"
                         value="{{ old('pIva', $restaurant->pIva) }}" required>
                 </div>
-                <div class="mb-3">
-                    <div class="mb-3">Tipologie ristorante</div>
+
+
+                <!-- Marco     -->
+                <div class="mt-5  form-group">
+                    <label for="types">types : </label>
                     @foreach ($types as $type)
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="tec-{{ $type->id }}"
-                                value="{{ $type->id }}" name="types[]"
-                                {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="tec-{{ $type->id }}">{{ $type->name }}</label>
+                            <input type="checkbox" name="types[]" class=" btn-check"
+                                id="type-{{ $type->id }}" value="{{ $type->id }}" autocomplete="off"
+                                {{ $restaurant->types->contains($type->id) ? 'checked' : '' }}>
+                            <label class="btn " for="type-{{ $type->id }}">{{ $type->name }}</label>
                         </div>
                     @endforeach
                 </div>
 
-                <button type="submit" class="btn btn-primary">Aggiorna Ristorante</button>
+                <button type="submit" class="btn btn-primary my-5">Aggiorna Ristorante</button>
             </form>
         </section>
     </div>
