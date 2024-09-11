@@ -50,23 +50,25 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal" id="exampleModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Are u sure u want to delete : {{ $dish->name }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Abort</button>
-                    <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger"
-                            type="submit">Delete</button>
-                    </form>
+    @if (isset($dish))
+        <div class="modal" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Are u sure u want to delete : {{ $dish->name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Abort</button>
+                        <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger"
+                                type="submit">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
