@@ -147,7 +147,7 @@
 
                             {{-- IMAGE --}}
                             <div class="form-group">
-                                <label for="image">Immagine del piatto</label>
+                                <label for="image">Immagine del ristorante</label>
                                 <input type="file" name="image" class="form-control">
                             </div>
 
