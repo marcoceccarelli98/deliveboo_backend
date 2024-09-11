@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container text-center">
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -42,7 +42,7 @@
                     </a>
                 @endif
 
-                <x-primary-button class="ms-3">
+                <x-primary-button class="ms-3 bg-primary">
                     {{ __('Log in') }}
                 </x-primary-button>
             </div>
