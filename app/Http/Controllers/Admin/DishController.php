@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dish;
 use App\Models\Restaurant;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 class DishController extends Controller
@@ -46,7 +47,13 @@ class DishController extends Controller
         $dish->price = $data['price'];
         $dish->visibility = $data['visibility'];
         $dish->slug = Str::slug($request->companyName, '-');
-        $dish->path_img = 'abc';
+
+        // Se un'immagine è stata caricata
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('dishes', 'public');
+            $dish->path_img = $imagePath; // Salviamo il percorso dell'immagine
+        }
+
         $dish->save();
 
         return redirect(route('dashboard'))->with('message', 'Piatto modificato correttamente');
@@ -93,8 +100,15 @@ class DishController extends Controller
      */
     public function destroy(Dish $dish)
     {
+
+        // Cancella l'immagine associata al piatto se esiste
+        if ($dish->path_img) {
+            $filePath = str_replace('storage/', '', $dish->path_img);
+            Storage::disk('public')->delete($filePath);
+        }
+
         $dish->delete();
 
-        return redirect()->route('admin.dish.index')->with('message', 'piatto eliminato correttamente');
+        return redirect()->route('dashboard')->with('message', 'piatto eliminato correttamente');
     }
 }

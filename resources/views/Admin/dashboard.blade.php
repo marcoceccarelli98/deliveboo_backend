@@ -21,6 +21,10 @@
                     @foreach ($dishes as $dish)
                         <div class="col py-3">
                             <div class="card bg-dark-subtle h-100">
+                                @if ($dish->path_img)
+                                    <img src="{{ asset('storage/' . $dish->path_img) }}" alt="{{ $dish->name }}"
+                                        style="max-width: 300px;">
+                                @endif
                                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $dish->name }}</h5>
@@ -29,6 +33,13 @@
                                         <a href="{{ route('dishes.edit', $dish->slug) }}" class="btn btn-primary"><i
                                                 class="fa-solid fa-pen"></i></a>
                                     </div>
+
+                                    {{-- Pulsante di cancellazione --}}
+                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger"
+                                        type="submit">
+                                        <i class="fas fa-trash-can"></i>
+                                    </button>
+
                                 </div>
                             </div>
                         </div>
@@ -36,5 +47,26 @@
                 </div>
             </div>
         @endif
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="exampleModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are u sure u want to delete : {{ $dish->name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Abort</button>
+                    <form action="{{ route('dishes.destroy', $dish->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger"
+                            type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

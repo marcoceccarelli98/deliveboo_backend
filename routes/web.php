@@ -47,13 +47,14 @@ Route::middleware('auth')->group(function () {
         ]
     );
 
+    Route::delete('/dishes/{dish}', [DishController::class, 'destroy'])->name('dishes.destroy');
+
     // Route::get('/dishes/{dish:slug}/edit', [DishController::class, 'edit'])->name('dishes.edit');
 
     // Route::get('/dishes/create', [DishController::class, 'create'])->name('dishes.create');
 
     // Route::get('/dish/{dish}/edit', [DishController::class, 'edit'])->name('dish.edit');
     // Route::patch('/dish/{dish}', [DishController::class, 'update'])->name('dish.update');
-    // Route::delete('/dish/{dish}', [DishController::class, 'destroy'])->name('dish.destroy');
 });
 
 require __DIR__ . '/auth.php';

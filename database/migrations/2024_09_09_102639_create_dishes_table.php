@@ -18,11 +18,11 @@ return new class extends Migration
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade'); // Collega il piatto al ristorante
 
             $table->string('name', 20);
-            $table->text('description');
+            $table->text('description')->nullable();;
             $table->decimal('price', 5, 2);
             $table->boolean('visibility');
             $table->string('slug', 30);
-            $table->string('path_img', 50);
+            $table->string('path_img', 255)->nullable();;
 
             $table->timestamps();
         });

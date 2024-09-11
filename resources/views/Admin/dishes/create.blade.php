@@ -9,23 +9,31 @@
         {{-- @include('shared.errors') --}}
 
         <section class="py-5">
-            <form action="{{ route('dishes.store') }}" method="POST">
+            <form action="{{ route('dishes.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome</label>
                     <input type="text" class="form-control" id="name" name="name">
                 </div>
+
                 <div class="mb-3">
                     <label for="description" class="form-label">Descrizione</label>
                     <textarea class="form-control" id="description" rows="6" name="description"></textarea>
                 </div>
+
                 <div class="mb-3">
                     <label for="price" class="form-label">Prezzo</label>
-                    <input type="number" class="form-control" id="price" name="price"></input>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01"></input>
                 </div>
+
                 <div class="mb-3">
                     <input type="radio" name="visibility" value="1"> Sì
                     <input type="radio" name="visibility" value="0"> No
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Immagine del piatto</label>
+                    <input type="file" name="image" class="form-control">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Crea un nuovo piatto</button>

@@ -27,8 +27,7 @@ class StoreDishRequest extends FormRequest
             'description' => ['required'],
             'price' => ['required', 'numeric', 'between:0,999.99'], // 'numeric' e 'between' sono usati per i numeri decimali
             'visibility' => ['required', 'boolean'],
-
-            /*inserire immagine*/
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine
         ];
     }
 }

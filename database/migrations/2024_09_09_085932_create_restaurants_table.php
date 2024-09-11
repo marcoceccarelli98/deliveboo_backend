@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address', 30);
             $table->char('pIva', 11)->unique();
             $table->string('city', 20)->nullable();
-            $table->string('path_img', 50)->nullable();
+            $table->string('path_img', 255)->nullable();
             $table->string('slug', 30);
 
 
