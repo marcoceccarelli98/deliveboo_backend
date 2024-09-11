@@ -78,6 +78,7 @@ class RestaurantController extends Controller
             'companyName' => 'required|max:20',
             'address' => 'required|max:30',
             'pIva' => 'required|size:11',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine
         ]);
 
         $restaurant->update($validated);

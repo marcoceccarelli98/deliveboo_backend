@@ -44,16 +44,25 @@ class RegisteredUserController extends Controller
             'city' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:30'],
             'pIva' => ['required', 'digits:11'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine
         ]);
 
         DB::transaction(function () use ($request) {
+            // Creo il nuovo utente
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
 
+
             if ($user) {
+
+                // Se un'immagine è stata caricata
+                $imagePath = $request->hasFile('image')
+                    ? $request->file('image')->store('restaurants', 'public')
+                    : null;
+
                 $user->restaurant()->create([
                     'user_id' => $user->id,
                     'companyName' => $request->companyName,
@@ -61,7 +70,7 @@ class RegisteredUserController extends Controller
                     'address' => $request->address,
                     'pIva' => $request->pIva,
                     'slug' => Str::slug($request->companyName, '-'),
-
+                    'path_img' => $imagePath, // Salviamo il percorso dell'immagine
                 ]);
             } else {
                 // Log l'errore o mostra un messaggio per il debug
