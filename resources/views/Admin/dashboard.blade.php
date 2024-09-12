@@ -2,56 +2,70 @@
 
 @section('content')
     <div class="container text-center">
-        <h1>DASHBOARD</h1>
 
         {{-- --------------- --}}
         {{-- RESTAURANT INFO --}}
         {{-- --------------- --}}
 
-        <div class="restaurant-info text-start bg-secondary rounded p-5 text-white">
-            <div class="row">
-                <div class="col">
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div class="fs-5">Nome : </div>
-                            <div class="fs-4">{{ $restaurant->companyName }}</div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between list-group-item-dark">
-                            <div class="fs-5">Città : </div>
-                            <div class="fs-4">{{ $restaurant->city }}</div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div class="fs-5">Indirizzo : </div>
-                            <div class="fs-4">{{ $restaurant->address }}</div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between list-group-item-dark">
-                            <div class="fs-5">P.IVA : </div>
-                            <div class="fs-4">{{ $restaurant->pIva }}</div>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between list-group-item-dark">
-                            <div class="fs-5">Tipologia : </div>
-                            <div class="fs-4">
-                                @if ($restaurant->types->isNotEmpty())
-                                    {{ $restaurant->types->pluck('name')->implode(', ') }}
-                                @else
-                                    Nessun tipo di cucina specificato
-                                @endif
-                            </div>
-                        </li>
-                    </ul>
-                    <a href="{{ route('restaurant.edit') }}" class="btn btn-warning mt-3">
-                        Modifica Dati
-                    </a>
+        <div class="restaurant-info bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="bg-secondary text-white p-4">
+                <h2 class="text-2xl font-bold mb-0">Informazioni Ristorante</h2>
+            </div>
+            <div class="p-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="list-group list-group-flush">
+                            @php
+                                $infoItems = [
+                                    [
+                                        'icon' => 'fas fa-utensils',
+                                        'label' => 'Nome',
+                                        'value' => $restaurant->companyName,
+                                    ],
+                                    ['icon' => 'fas fa-city', 'label' => 'Città', 'value' => $restaurant->city],
+                                    [
+                                        'icon' => 'fas fa-map-marker-alt',
+                                        'label' => 'Indirizzo',
+                                        'value' => $restaurant->address,
+                                    ],
+                                    ['icon' => 'fas fa-id-card', 'label' => 'P.IVA', 'value' => $restaurant->pIva],
+                                    [
+                                        'icon' => 'fas fa-concierge-bell',
+                                        'label' => 'Tipologia',
+                                        'value' => $restaurant->types->isNotEmpty()
+                                            ? $restaurant->types->pluck('name')->implode(', ')
+                                            : 'Nessun tipo di cucina specificato',
+                                    ],
+                                ];
+                            @endphp
+
+                            @foreach ($infoItems as $item)
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center py-3 border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <i class="{{ $item['icon'] }} fa-fw text-primary me-3"></i>
+                                        <span class="font-weight-bold">{{ $item['label'] }}:</span>
+                                    </div>
+                                    <span class="text-muted">{{ $item['value'] }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-center align-items-center mt-4 mt-md-0">
+                        <div class="text-center">
+                            <img src="{{ $restaurant->path_img
+                                ? asset('storage/' . $restaurant->path_img)
+                                : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/800px-No_image_available.svg.png' }}"
+                                alt="{{ $restaurant->name }}" class="img-fluid rounded-circle shadow"
+                                style="max-width: 200px; height: 200px; object-fit: cover;">
+                        </div>
+                    </div>
                 </div>
-                <div class="col text-center">
-                    @if ($restaurant->path_img)
-                        <img src="{{ asset('storage/' . $restaurant->path_img) }}" alt="{{ $restaurant->name }}"
-                            style="max-width: 200px;">
-                    @else
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/800px-No_image_available.svg.png"
-                            alt="{{ $restaurant->name }}" style="max-width:300px; min-width:300px">
-                    @endif
-                </div>
+            </div>
+            <div class="p-4 bg-light">
+                <a href="{{ route('restaurant.edit') }}" class="btn btn-secondary btn-lg btn-block">
+                    <i class="fas fa-edit mr-2"></i> Modifica Dati
+                </a>
             </div>
         </div>
 
@@ -59,15 +73,11 @@
         {{--     BUTTONS     --}}
         {{-- --------------- --}}
 
-        <div class="d-flex justify-content-evenly my-5">
-
-
-            <a href="{{ route('dishes.create') }}" class="btn btn-success">
+        <div class="menu my-5">
+            <h2 class="mb-4">Menù</h2>
+            <a href="{{ route('dishes.create') }}" class="btn btn-success mb-3">
                 Aggiungi Piatto
             </a>
-        </div>
-        <div class="menu mb-5">
-            <h2 class="mb-5">Menù</h2>
 
             @if ($dishes->isEmpty())
                 <p>Non ci sono piatti disponibili.</p>
