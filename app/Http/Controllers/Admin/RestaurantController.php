@@ -78,6 +78,7 @@ class RestaurantController extends Controller
 
         $data = $request->validate([
             'companyName' => 'required|max:20',
+            'city' => 'required|max:20',
             'address' => 'required|max:30',
             'pIva' => 'required|size:11',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
