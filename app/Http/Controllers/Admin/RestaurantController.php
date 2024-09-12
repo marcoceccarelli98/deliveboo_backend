@@ -8,6 +8,8 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Auth\StoreRestaurantRequest;
+use App\Http\Requests\Auth\UpdateRestaurantRequest;
 
 
 class RestaurantController extends Controller
@@ -34,15 +36,11 @@ class RestaurantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRestaurantRequest $request)
     {
-        $validated = $request->validate([
-            'companyName' => 'required|max:20',
-            'address' => 'required|max:30',
-            'pIva' => 'required|size:11',
-        ]);
+        $data = $request->validated();
 
-        Restaurant::create($validated);
+        Restaurant::create($data);
         return redirect()->route('restaurants.index')->with('success', 'Ristorante creato con successo.');
     }
 
@@ -72,18 +70,12 @@ class RestaurantController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request)
+    public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
     {
-        $restaurant = auth()->user()->restaurant;
 
-        $data = $request->validate([
-            'companyName' => 'required|max:20',
-            'city' => 'required|max:20',
-            'address' => 'required|max:30',
-            'pIva' => 'required|size:11',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'types' => 'nullable|array|exists:types,id',
-        ]);
+        $data = $request->validated();
+
+        $restaurant = auth()->user()->restaurant;
 
         // Gestione dell'immagine
         if ($request->hasFile('image')) {

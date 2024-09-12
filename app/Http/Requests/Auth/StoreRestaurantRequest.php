@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDishRequest extends FormRequest
+class StoreRestaurantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,11 @@ class StoreDishRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            'name' => ['required', 'max:20'],
-            'description' => ['required'],
-            'price' => ['required', 'numeric', 'between:0,999.99'], // 'numeric' e 'between' sono usati per i numeri decimali
-            'visibility' => ['required', 'boolean'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Validazione dell'immagine
+            'companyName' => ['required', 'max:20', 'unique:restaurants,companyName'],
+            'address' => ['required', 'max:30'],
+            'pIva' => ['required', 'size:11', 'unique:restaurants,pIva'],
+            'types' => ['required', 'array', 'min:1'],
+            'types.*' => ['exists:types,id'],
         ];
     }
 }

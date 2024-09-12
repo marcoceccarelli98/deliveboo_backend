@@ -10,10 +10,10 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
-
+                            <div class="div mb-3 fs-6">* Campi Obbligatori</div>
                             <div class="form-group row my-2">
                                 <label for="name"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Nome') . '*' }}</label>
 
                                 <div class="col-md-6 my-2">
                                     <input id="name" type="text"
@@ -30,7 +30,7 @@
 
                             <div class="form-group row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right my-2">{{ __('Indirizzo E-Mail') }}</label>
+                                    class="col-md-4 col-form-label text-md-right my-2">{{ __('Indirizzo E-Mail' . '*') }}</label>
 
                                 <div class="col-md-6 my-2">
                                     <input id="email" type="email"
@@ -45,15 +45,14 @@
                                 </div>
                             </div>
 
+                            {{-- Password field --}}
                             <div class="form-group row my-2">
                                 <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') . '*' }}</label>
                                 <div class="col-md-6 my-2">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="new-password">
-
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -62,26 +61,29 @@
                                 </div>
                             </div>
 
+                            {{-- Confirm Password field --}}
                             <div class="form-group row my-2">
                                 <label for="password-confirm"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Conferma Password') }}</label>
-
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Conferma Password') . '*' }}</label>
                                 <div class="col-md-6 my-2">
                                     <input id="password-confirm" type="password" class="form-control"
                                         name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
 
+                            {{-- Password match error message --}}
+                            <div id="password-match-error" class="alert alert-danger" style="display: none;">
+                                Le password non corrispondono.
+                            </div>
+
                             {{-- COMPANY NAME --}}
                             <div class="form-group row my-2">
                                 <label for="companyName"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Nome Ristorante') }}</label>
-
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Nome Ristorante') . '*' }}</label>
                                 <div class="col-md-6 my-2">
                                     <input id="companyName" type="text"
                                         class="form-control @error('companyName') is-invalid @enderror" name="companyName"
                                         value="{{ old('companyName') }}" required maxlength="20">
-
                                     @error('companyName')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -93,7 +95,7 @@
                             {{-- CITY --}}
                             <div class="form-group row my-2">
                                 <label for="city"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Città') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Città') . '*' }}</label>
 
                                 <div class="col-md-6 my-2">
                                     <input id="city" type="text"
@@ -111,7 +113,7 @@
                             {{-- ADDRESS --}}
                             <div class="form-group row my-2">
                                 <label for="address"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Indirizzo') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Indirizzo') . '*' }}</label>
 
                                 <div class="col-md-6 my-2">
                                     <input id="address" type="text"
@@ -129,7 +131,7 @@
                             {{-- PIVA --}}
                             <div class="form-group row my-2">
                                 <label for="pIva"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('P.IVA') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('P.IVA') . '*' }}</label>
 
                                 <div class="col-md-6 my-2">
                                     <input id="pIva" type="number"
@@ -147,27 +149,40 @@
 
                             {{-- IMAGE --}}
                             <div class="form-group my-2">
-                                <label for="image">Immagine del ristorante</label>
+                                <label class="mb-2" for="image">Immagine del ristorante</label>
                                 <input type="file" name="image" class="form-control">
                             </div>
 
-                            
-                            <div class="mt-5  form-group my-2">
-                                <label for="types">Tipologie : </label>
+                            {{-- TIPOLOGIE --}}
+                            <div class="mt-4 form-group my-2">
+                                <div class="mb-3" for="types">Tipologie*</div>
                                 @foreach ($types as $type)
-                                <div class="form-check form-check-inline">
-                                    <input type="checkbox" name="types[]" class=" btn-check"
-                                    id="type-{{ $type->id }}" value="{{ $type->id }}"
-                                    autocomplete="off">
-                                    <label class="btn " for="type-{{ $type->id }}">{{ $type->name }}</label>
-                                </div>
-                                @endforeach
-                                <div class="form-group row mb-0 my-2">
-                                    <div class="col-md-8 offset-md-4 my-2">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Registrati') }}
-                                        </button>
+                                    <div class="form-check form-check-inline">
+                                        <input type="checkbox" name="types[]"
+                                            class="btn-check type-checkbox @error('types') is-invalid @enderror"
+                                            id="type-{{ $type->id }}" value="{{ $type->id }}"
+                                            {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}
+                                            autocomplete="off">
+                                        <label class="btn btn-outline-secondary"
+                                            for="type-{{ $type->id }}">{{ $type->name }}</label>
                                     </div>
+                                @endforeach
+                                @error('types')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <div id="types-error" class="text-danger mt-2" style="display: none;">
+                                    Seleziona almeno un tipo di cucina.
+                                </div>
+                            </div>
+
+                            {{-- REGISTRATI --}}
+                            <div class="form-group row mb-0 my-2">
+                                <div class="col-md-8 offset-md-4 my-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Registrati') }}
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -176,4 +191,66 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // --- PASSWORD ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const password = document.getElementById('password');
+            const passwordConfirm = document.getElementById('password-confirm');
+            const passwordMatchError = document.getElementById('password-match-error');
+
+            function validatePasswords() {
+                if (password.value !== passwordConfirm.value) {
+                    passwordMatchError.style.display = 'block';
+                    password.classList.add('is-invalid');
+                    passwordConfirm.classList.add('is-invalid');
+                    return false;
+                } else {
+                    passwordMatchError.style.display = 'none';
+                    password.classList.remove('is-invalid');
+                    passwordConfirm.classList.remove('is-invalid');
+                    return true;
+                }
+            }
+
+            form.addEventListener('submit', function(event) {
+                if (!validatePasswords()) {
+                    event.preventDefault();
+                }
+            });
+
+            password.addEventListener('input', validatePasswords);
+            passwordConfirm.addEventListener('input', validatePasswords);
+        });
+
+        // --- TIPOLOGIE ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const typeCheckboxes = document.querySelectorAll('.type-checkbox');
+            const typesError = document.getElementById('types-error');
+
+            function validateTypes() {
+                let isChecked = Array.from(typeCheckboxes).some(checkbox => checkbox.checked);
+                if (!isChecked) {
+                    typesError.style.display = 'block';
+                    typeCheckboxes.forEach(checkbox => checkbox.classList.add('is-invalid'));
+                } else {
+                    typesError.style.display = 'none';
+                    typeCheckboxes.forEach(checkbox => checkbox.classList.remove('is-invalid'));
+                }
+                return isChecked;
+            }
+
+            form.addEventListener('submit', function(event) {
+                if (!validateTypes()) {
+                    event.preventDefault();
+                }
+            });
+
+            typeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', validateTypes);
+            });
+        });
+    </script>
 @endsection

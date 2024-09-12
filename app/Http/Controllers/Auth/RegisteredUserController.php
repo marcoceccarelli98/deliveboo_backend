@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\RegisterUserRestaurantRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use App\Models\Type;
@@ -34,19 +35,9 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterUserRestaurantRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'companyName' => ['required', 'string', 'max:20'],
-            'city' => ['required', 'string', 'max:20'],
-            'address' => ['required', 'string', 'max:30'],
-            'pIva' => ['required', 'digits:11'],
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'types' => 'nullable|array|exists:types,id',
-        ]);
+        $data = $request->validated();
 
         DB::transaction(function () use ($data, $request) {
             // Creo il nuovo utente
