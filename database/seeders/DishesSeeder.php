@@ -21,7 +21,7 @@ class DishesSeeder extends Seeder
         $newDish->price = 14.00;
         $newDish->visibility =  1;
         $newDish->slug = Str::of($newDish->name)->slug('-');
-        $newDish->path_img = 'abc';
+        $newDish->path_img = 'dishes/risotto-allo-zafferano.jpg';
         $newDish->save();
 
         $newDish = new Dish();
@@ -31,7 +31,7 @@ class DishesSeeder extends Seeder
         $newDish->price = 18.00;
         $newDish->visibility =  1;
         $newDish->slug = Str::of($newDish->name)->slug('-');
-        $newDish->path_img = 'abc';
+        $newDish->path_img = 'dishes/cotoletta-alla-milanese.jpg';
         $newDish->save();
 
         $newDish = new Dish();

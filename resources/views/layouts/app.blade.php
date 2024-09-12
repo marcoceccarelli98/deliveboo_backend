@@ -28,7 +28,7 @@
     <div id="app">
 
 
-        <nav class="position-fixed top-0 start-0 end-0 navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="position-fixed top-0 start-0 end-0 navbar navbar-expand-md navbar-light bg-white shadow-sm z-3">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center bold" href="{{ url('/') }}">
                     DeliveBoo
@@ -45,11 +45,6 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/') }}">{{ __('Home') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                @if (auth()->check()) href="{{ url('/admin/projects') }}" @endif
-                                href="{{ url('/projects') }}">{{ __('Projects') }}</a>
                         </li>
                     </ul>
 
