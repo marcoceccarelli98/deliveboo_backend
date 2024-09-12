@@ -8,8 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- <title>{{ config('app.name', 'myPortfolio') }}</title> --}}
-    <title>myPortfolio</title>
+    <title>DeliveBoo - BackOffice</title>
 
 
     <!-- Fonts -->
