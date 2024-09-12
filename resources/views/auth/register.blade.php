@@ -30,7 +30,7 @@
 
                             <div class="form-group row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Indirizzo E-Mail') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
@@ -64,7 +64,7 @@
 
                             <div class="form-group row">
                                 <label for="password-confirm"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Conferma Password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
@@ -75,7 +75,7 @@
                             {{-- COMPANY NAME --}}
                             <div class="form-group row">
                                 <label for="companyName"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Nome Ristorante') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="companyName" type="text"
@@ -93,7 +93,7 @@
                             {{-- CITY --}}
                             <div class="form-group row">
                                 <label for="city"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Città') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="city" type="text"
@@ -111,7 +111,7 @@
                             {{-- ADDRESS --}}
                             <div class="form-group row">
                                 <label for="address"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Indirizzo') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="address" type="text"
@@ -129,7 +129,7 @@
                             {{-- PIVA --}}
                             <div class="form-group row">
                                 <label for="pIva"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('PIVA') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('P.IVA') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="pIva" type="number"
@@ -151,24 +151,24 @@
                                 <input type="file" name="image" class="form-control">
                             </div>
 
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
-                                    </button>
-                                </div>
-                            </div>
-
+                            
                             <div class="mt-5  form-group">
-                                <label for="types">types : </label>
+                                <label for="types">Tipologie : </label>
                                 @foreach ($types as $type)
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="types[]" class=" btn-check"
-                                            id="type-{{ $type->id }}" value="{{ $type->id }}"
-                                            autocomplete="off">
-                                        <label class="btn " for="type-{{ $type->id }}">{{ $type->name }}</label>
-                                    </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="types[]" class=" btn-check"
+                                    id="type-{{ $type->id }}" value="{{ $type->id }}"
+                                    autocomplete="off">
+                                    <label class="btn " for="type-{{ $type->id }}">{{ $type->name }}</label>
+                                </div>
                                 @endforeach
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-8 offset-md-4 my-2">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Registrati') }}
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
