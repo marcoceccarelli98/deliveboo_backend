@@ -156,17 +156,21 @@
                             {{-- TIPOLOGIE --}}
                             <div class="mt-4 form-group my-2">
                                 <div class="mb-3" for="types">Tipologie*</div>
-                                @foreach ($types as $type)
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" name="types[]"
-                                            class="btn-check type-checkbox @error('types') is-invalid @enderror"
-                                            id="type-{{ $type->id }}" value="{{ $type->id }}"
-                                            {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}
-                                            autocomplete="off">
-                                        <label class="btn btn-outline-secondary"
-                                            for="type-{{ $type->id }}">{{ $type->name }}</label>
+                                <div class="row gy-2">
+                                    @foreach ($types as $type)
+                                    <div class="col-3">
+                                        <div class="form-check ps-0 text-center">
+                                            <input type="checkbox" name="types[]"
+                                                class="btn-check type-checkbox @error('types') is-invalid @enderror"
+                                                id="type-{{ $type->id }}" value="{{ $type->id }}"
+                                                {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-secondary w-100"
+                                                for="type-{{ $type->id }}">{{ $type->name }}</label>
+                                        </div>
                                     </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                                 @error('types')
                                     <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -179,7 +183,7 @@
 
                             {{-- REGISTRATI --}}
                             <div class="form-group row mb-0 my-2">
-                                <div class="col-md-8 offset-md-4 my-2">
+                                <div class="col my-2 text-center">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Registrati') }}
                                     </button>
