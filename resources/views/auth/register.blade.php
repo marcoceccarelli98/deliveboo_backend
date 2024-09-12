@@ -153,40 +153,42 @@
                                     </div>
                                 </div>
 
-                                <!-- Tipologie -->
-                                <div class="form-group row mb-3">
-                                    <label class="col-md-4 col-form-label text-md-right">Tipologie*</label>
-                                    <div class="col-md-6">
+                                {{-- TIPOLOGIE --}}
+                                <div class="mt-4 form-group my-2">
+                                    <div class="mb-3" for="types">Tipologie*</div>
+                                    <div class="row gy-2">
                                         @foreach ($types as $type)
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" name="types[]"
-                                                    class="btn-check type-checkbox @error('types') is-invalid @enderror"
-                                                    id="type-{{ $type->id }}" value="{{ $type->id }}"
-                                                    {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}
-                                                    autocomplete="off">
-                                                <label class="btn btn-outline-secondary"
-                                                    for="type-{{ $type->id }}">{{ $type->name }}</label>
+                                            <div class="col-3">
+                                                <div class="form-check ps-0 text-center">
+                                                    <input type="checkbox" name="types[]"
+                                                        class="btn-check type-checkbox @error('types') is-invalid @enderror"
+                                                        id="type-{{ $type->id }}" value="{{ $type->id }}"
+                                                        {{ in_array($type->id, old('types', [])) ? 'checked' : '' }}
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-secondary w-100"
+                                                        for="type-{{ $type->id }}">{{ $type->name }}</label>
+                                                </div>
                                             </div>
                                         @endforeach
-                                        @error('types')
-                                            <span class="invalid-feedback d-block"
-                                                role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                        <div id="types-error" class="text-danger mt-2" style="display: none;">
-                                            Seleziona almeno un tipo di cucina.
-                                        </div>
+                                    </div>
+                                    @error('types')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    <div id="types-error" class="text-danger mt-2" style="display: none;">
+                                        Seleziona almeno un tipo di cucina.
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Pulsante Registrati -->
-                            <div class="form-group row mt-4">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Registrati') }}
-                                    </button>
+                                {{-- REGISTRATI --}}
+                                <div class="form-group row mb-0 my-2">
+                                    <div class="col my-2 text-center">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Registrati') }}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>
