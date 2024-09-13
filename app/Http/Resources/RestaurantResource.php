@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\DishResource;
 
 class RestaurantResource extends JsonResource
 {
@@ -10,12 +11,12 @@ class RestaurantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'companyName' => $this->companyName,
-            'city' => $this->city,
+            'name' => $this->companyName,
+            'slug' => $this->slug,
             'address' => $this->address,
-            'types' => $this->types->pluck('name'),
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-            // Altri campi che vuoi includere
+            'city' => $this->city,
+            'image' => $this->path_img ? asset('storage/' . $this->path_img) : null,
+            'dishes' => DishResource::collection($this->whenLoaded('dishes')),
         ];
     }
 }

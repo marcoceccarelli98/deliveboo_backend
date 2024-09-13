@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Resources\RestaurantResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class RestaurantApiController extends Controller
 {
@@ -15,14 +16,29 @@ class RestaurantApiController extends Controller
         $query = Restaurant::with('types');
 
         if ($request->has('types')) {
-            $categories = explode(',', $request->input('types'));
-            $query->whereHas('types', function ($q) use ($categories) {
-                $q->whereIn('name', $categories);
+            $types = explode(',', $request->input('types'));
+            $query->whereHas('types', function ($q) use ($types) {
+                $q->whereIn('name', $types);
             });
         }
 
         $restaurants = $query->get();
 
         return RestaurantResource::collection($restaurants);
+    }
+
+    public function show($slug)
+    {
+        try {
+            $restaurant = Restaurant::with(['dishes' => function ($query) {
+                $query->where('visibility', true);
+            }])->where('slug', $slug)->firstOrFail();
+
+            return new RestaurantResource($restaurant);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Restaurant not found'
+            ], 404);
+        }
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RestaurantApiController;
 use App\Http\Controllers\Api\DishApiController;
+use App\Http\Controllers\Api\TypeApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/restaurants', [RestaurantApiController::class, 'index']);
+Route::get('/restaurants/{slug}', [RestaurantApiController::class, 'show']);
 
 Route::get('/dishes', [DishApiController::class, 'index']);
 Route::get('/dishes/{slug}', [DishApiController::class, 'show']);
+
+Route::get('/types', [TypeApiController::class, 'index']);
