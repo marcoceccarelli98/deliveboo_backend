@@ -17,9 +17,11 @@ class RestaurantApiController extends Controller
 
         if ($request->has('types')) {
             $types = explode(',', $request->input('types'));
+            $typeCount = count($types);
+
             $query->whereHas('types', function ($q) use ($types) {
                 $q->whereIn('name', $types);
-            });
+            }, '=', $typeCount);
         }
 
         $restaurants = $query->get();
