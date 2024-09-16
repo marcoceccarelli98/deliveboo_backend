@@ -22,9 +22,8 @@ class UpdateDishRequest extends FormRequest
     public function rules(): array
     {
         return [
-
             'name' => ['required', 'max:20'],
-            'description' => ['required'],
+            'description' => ['nullable'],
             'price' => ['required', 'numeric', 'between:0,999.99'], // 'numeric' e 'between' sono usati per i numeri decimali
             'visibility' => ['required', 'boolean'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validazione dell'immagine

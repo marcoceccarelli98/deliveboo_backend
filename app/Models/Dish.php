@@ -10,7 +10,7 @@ class Dish extends Model
     use HasFactory;
 
     // Utilizza 'slug' come chiave di ricerca per le rotte
-    protected $fillable = ['name', 'price', 'description', 'slug'];
+    protected $fillable = ['name', 'price', 'description', 'slug', 'visibility'];
 
     //Relazione One to Many con Restaurant
     public function restaurant()
