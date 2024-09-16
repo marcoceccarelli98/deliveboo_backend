@@ -15,7 +15,7 @@ class RestaurantResource extends JsonResource
             'slug' => $this->slug,
             'address' => $this->address,
             'city' => $this->city,
-            'image' => $this->path_img ? asset('storage/' . $this->path_img) : null,
+            'image' => $this->path_img ? asset($this->path_img) : null,
             'dishes' => DishResource::collection($this->whenLoaded('dishes')),
         ];
     }
