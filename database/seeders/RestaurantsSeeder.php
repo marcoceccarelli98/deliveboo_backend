@@ -24,7 +24,7 @@ class RestaurantsSeeder extends Seeder
         $newRestaurant->pIva = "12345678901";
         $newRestaurant->city = "Milano";
         $newRestaurant->slug = Str::of($newRestaurant->companyName)->slug('-');
-        $newRestaurant->path_img = '/restaurants/la-dolce-vita.jpg';
+        $newRestaurant->path_img = '/restaurants/la-dolce-vita.jpeg';
         $newRestaurant->save();
 
         $newRestaurant = new Restaurant();
