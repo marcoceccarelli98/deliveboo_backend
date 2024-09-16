@@ -20,7 +20,7 @@ class DishResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'visibility' => (bool)$this->visibility,
-            'image' => $this->path_img ? asset('storage/' . $this->path_img) : null,
+            'image' => $this->path_img ? asset($this->path_img) : null,
         ];
     }
 }
