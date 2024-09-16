@@ -58,9 +58,13 @@ class RestaurantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(Restaurant $restaurant)
     {
-        $restaurant = auth()->user()->restaurant;
+        // Assicurati che l'utente possa modificare solo il proprio ristorante
+        if ($restaurant->id !== auth()->user()->restaurant->id) {
+            abort(403, 'Non sei autorizzato a modificare questo ristorante.');
+        }
+
         $types = Type::all();
         return view('admin.restaurants.edit', compact('restaurant', 'types'));
     }
@@ -72,37 +76,32 @@ class RestaurantController extends Controller
 
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
     {
+        // Assicurati che l'utente possa aggiornare solo il proprio ristorante
+        if ($restaurant->id !== auth()->user()->restaurant->id) {
+            abort(403, 'Non sei autorizzato a modificare questo ristorante.');
+        }
 
         $data = $request->validated();
 
-        $restaurant = auth()->user()->restaurant;
-
-        // Gestione dell'immagine
         if ($request->hasFile('image')) {
-            // Elimina la vecchia immagine se esiste
             if ($restaurant->path_img) {
                 Storage::disk('public')->delete($restaurant->path_img);
             }
-
-            // Salva la nuova immagine
             $data['path_img'] = $request->file('image')->store('restaurants', 'public');
         }
 
-        // Aggiornamento dello slug se il nome dell'azienda è cambiato
         if ($restaurant->companyName !== $data['companyName']) {
             $data['slug'] = Str::slug($data['companyName']);
         }
 
         $restaurant->update($data);
 
-        // Sincronizza i tipi solo se sono presenti nella richiesta
         if (isset($data['types'])) {
             $restaurant->types()->sync($data['types']);
         }
 
         return redirect()->route('dashboard')->with('success', 'Ristorante aggiornato con successo.');
     }
-
 
     /**
      * Remove the specified resource from storage.

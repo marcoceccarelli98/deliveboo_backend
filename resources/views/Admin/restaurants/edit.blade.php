@@ -7,10 +7,20 @@
             <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Torna al menù</a>
         </div>
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         {{-- @include('shared.errors') --}}
 
         <section class="py-5">
-            <form action="{{ route('restaurant.update', $restaurant->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('restaurant.update', $restaurant->slug) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <div class="mb-3">

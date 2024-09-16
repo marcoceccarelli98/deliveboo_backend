@@ -22,20 +22,23 @@ class UpdateRestaurantRequest extends FormRequest
      */
     public function rules(): array
     {
+        $restaurantId = auth()->user()->restaurant->id;
         return [
             'companyName' => [
                 'required',
                 'max:20',
-                Rule::unique('restaurants')->ignore($this->route('restaurant')),
+                Rule::unique('restaurants')->ignore($restaurantId),
             ],
+            'city' => ['required', 'max:30'],
             'address' => ['required', 'max:30'],
             'pIva' => [
                 'required',
                 'size:11',
-                Rule::unique('restaurants')->ignore($this->route('restaurant')),
+                Rule::unique('restaurants')->ignore($restaurantId),
             ],
             'types' => ['required', 'array', 'min:1'],
             'types.*' => ['exists:types,id'],
+            'image' => ['nullable', 'image', 'max:2048'], // Aggiungi la validazione per l'immagine
         ];
     }
 
