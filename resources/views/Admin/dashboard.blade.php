@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="p-4 bg-light">
-                <a href="{{ route('restaurant.edit') }}" class="btn btn-secondary btn-lg btn-block">
+                <a href="{{ route('restaurant.edit', $restaurant->slug) }}" class="btn btn-secondary btn-lg btn-block">
                     <i class="fas fa-edit mr-2"></i> Modifica Dati
                 </a>
             </div>

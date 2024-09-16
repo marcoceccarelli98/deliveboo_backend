@@ -30,14 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // RESTAURANTS
-    // Route::resource('restaurants', RestaurantController::class)->parameters(
-    //     [
-    //         'restaurants' => 'restaurant:slug'
-    //     ]
-    // );
-
-    Route::get('/restaurant', [RestaurantController::class, 'edit'])->name('restaurant.edit');
-    Route::patch('/restaurant', [RestaurantController::class, 'update'])->name('restaurant.update');
+    Route::get('/restaurant/{restaurant:slug}/edit', [RestaurantController::class, 'edit'])->name('restaurant.edit');
+    Route::patch('/restaurant/{restaurant:slug}', [RestaurantController::class, 'update'])->name('restaurant.update');
+    // Route::get('/restaurant', [RestaurantController::class, 'edit'])->name('restaurant.edit');
+    // Route::patch('/restaurant', [RestaurantController::class, 'update'])->name('restaurant.update');
     // Route::delete('/restaurant', [RestaurantController::class, 'destroy'])->name('restaurant.destroy');
 
     // DISHES
