@@ -113,5 +113,15 @@ class DishesSeeder extends Seeder
         $newDish->slug = Str::of($newDish->name)->slug('-');
         $newDish->path_img = 'abc';
         $newDish->save();
+        
+        $newDish = new Dish();
+        $newDish->restaurant_id = 5;
+        $newDish->name = "Cinghiale Umido";
+        $newDish->description = "Cinghiale cucinato lentamente con vino rosso, erbe aromatiche e spezie, servito con polenta cremosa.";
+        $newDish->price = 22.00;
+        $newDish->visibility = 1;
+        $newDish->slug = Str::of($newDish->name)->slug('-');
+        $newDish->path_img = 'abc';
+        $newDish->save();
     }
 }
