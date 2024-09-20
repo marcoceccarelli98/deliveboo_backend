@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            // Colonna di relazione con la tabella restaurants
-            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade'); // Collega l'ordine al ristorante
-
-            $table->decimal('total', 5, 2);
+            $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
             $table->string('status_order', 20);
             $table->string('status_payment', 20);
-            $table->string('customer_name', 20);
-            $table->string('customer_address', 20);
+            $table->string('customer_name', 30);
+            $table->string('customer_email', 50);
+            $table->string('customer_address', 30);
+            $table->decimal('total', 8, 2);
 
             $table->timestamps();
         });
@@ -35,3 +34,8 @@ return new class extends Migration
         Schema::dropIfExists('orders');
     }
 };
+
+
+// -----------------------------------------------------
+// -----------------------------------------------------
+// -----------------------------------------------------

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RestaurantApiController;
 use App\Http\Controllers\Api\DishApiController;
 use App\Http\Controllers\Api\TypeApiController;
+use App\Http\Controllers\Api\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,5 @@ Route::get('/dishes', [DishApiController::class, 'index']);
 Route::get('/dishes/{slug}', [DishApiController::class, 'show']);
 
 Route::get('/types', [TypeApiController::class, 'index']);
+
+Route::post('/process-payment', [PaymentController::class, 'processPayment']);
