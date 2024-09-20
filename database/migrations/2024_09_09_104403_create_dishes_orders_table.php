@@ -13,15 +13,9 @@ return new class extends Migration
     {
         Schema::create('dishes_orders', function (Blueprint $table) {
             $table->id();
-
-            // Definisci la colonna dish_id 
-            $table->foreignId('dish_id')->constrained('dishes')->onDelete('cascade');
-
-            // Definisci la colonna order_id 
-            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-
-            $table->unsignedTinyInteger('quantity');
-
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('dish_id')->constrained()->onDelete('cascade');
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }
@@ -31,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dishes_orders');
+        Schema::dropIfExists('dish_order');
+        Schema::dropIfExists('orders');
     }
 };
