@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('restaurant_id')->constrained('restaurants')->onDelete('cascade');
-            $table->string('status_order', 20);
-            $table->string('status_payment', 20);
-            $table->string('customer_name', 30);
-            $table->string('customer_email', 50);
-            $table->string('customer_address', 30);
+            $table->string('customer_name', 100);
+            $table->string('customer_email', 100);
+            $table->string('customer_address', 100);
             $table->decimal('total', 8, 2);
 
             $table->timestamps();

@@ -18,6 +18,6 @@ class Order extends Model
     //Relazione Many to Many con Dish
     public function dishes()
     {
-        return $this->BelongsToMany(Dish::class);
+        return $this->BelongsToMany(Dish::class, 'dishes_orders')->withPivot('quantity');;
     }
 }
