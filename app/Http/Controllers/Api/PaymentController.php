@@ -8,6 +8,9 @@ use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmation;
+
 
 class PaymentController extends Controller
 {
@@ -63,8 +66,8 @@ class PaymentController extends Controller
 
             Log::info('Ordine creato con successo. ID: ' . $order->id);
 
-            // Simulazione del processo di pagamento
-            // Qui andrà la logica effettiva di processing del pagamento
+            // Invia l'email di conferma
+            Mail::to($validatedData['email'])->queue(new OrderConfirmation($order));
 
             return response()->json([
                 'success' => true,
