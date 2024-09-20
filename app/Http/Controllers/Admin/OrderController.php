@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Dish;
@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-
-    public function processPayment(Request $request)
-    {
-        // Logica per processare il pagamento
-        // ...
-
-        return response()->json(['success' => true, 'message' => 'Pagamento processato con successo']);
-    }
 
     public function store(Request $request): JsonResponse
     {
