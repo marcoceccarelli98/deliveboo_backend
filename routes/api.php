@@ -5,11 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RestaurantApiController;
 use App\Http\Controllers\Api\DishApiController;
 use App\Http\Controllers\Api\TypeApiController;
-<<<<<<< HEAD
 use App\Http\Controllers\ContactTestController;
-=======
 use App\Http\Controllers\Api\PaymentController;
->>>>>>> main
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +31,6 @@ Route::get('/dishes/{slug}', [DishApiController::class, 'show']);
 
 Route::get('/types', [TypeApiController::class, 'index']);
 
-<<<<<<< HEAD
 //test invio mail
 Route::get('/test-contact', [ContactTestController::class, 'testNewContact']);
-=======
 Route::post('/process-payment', [PaymentController::class, 'processPayment']);
->>>>>>> main
