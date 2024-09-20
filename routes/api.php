@@ -33,4 +33,6 @@ Route::get('/types', [TypeApiController::class, 'index']);
 
 //test invio mail
 Route::get('/test-contact', [ContactTestController::class, 'testNewContact']);
+
+//Process Payment
 Route::post('/process-payment', [PaymentController::class, 'processPayment']);
