@@ -35,6 +35,46 @@ class DishesSeeder extends Seeder
         $newDish->path_img = 'dishes/cotoletta-alla-milanese.jpg';
         $newDish->save();
 
+        $newDish = new Dish();
+        $newDish->restaurant_id = 1;
+        $newDish->name = "Tagliolini Tartufo";
+        $newDish->description = "Tagliolini freschi fatti a mano conditi con tartufo bianco pregiato e un filo di olio extravergine d'oliva. Un piatto raffinato e aromatico.";
+        $newDish->price = 22.00;
+        $newDish->visibility =  1;
+        $newDish->slug = Str::of($newDish->name)->slug('-');
+        $newDish->path_img = 'dishes/tagliolini-tartufo-bianco.jpg';
+        $newDish->save();
+
+        $newDish = new Dish();
+        $newDish->restaurant_id = 1;
+        $newDish->name = "Ossobuco Milanese";
+        $newDish->description = "Tenero ossobuco di vitello cucinato lentamente in un brodo di vino bianco e verdure, servito con gremolada e risotto allo zafferano.";
+        $newDish->price = 24.00;
+        $newDish->visibility =  1;
+        $newDish->slug = Str::of($newDish->name)->slug('-');
+        $newDish->path_img = 'dishes/ossobuco-alla-milanese.jpg';
+        $newDish->save();
+
+        $newDish = new Dish();
+        $newDish->restaurant_id = 1;
+        $newDish->name = "Carpaccio di Manzo";
+        $newDish->description = "Sottile carpaccio di manzo condito con rucola fresca, scaglie di parmigiano e un leggero dressing di limone e olio extravergine.";
+        $newDish->price = 16.00;
+        $newDish->visibility =  1;
+        $newDish->slug = Str::of($newDish->name)->slug('-');
+        $newDish->path_img = 'dishes/carpaccio-rucola-parmigiano.jpg';
+        $newDish->save();
+
+        $newDish = new Dish();
+        $newDish->restaurant_id = 1;
+        $newDish->name = "Tiramisù Classico";
+        $newDish->description = "Il tradizionale dolce italiano con strati di savoiardi, crema al mascarpone, caffè e cacao amaro.";
+        $newDish->price = 7.00;
+        $newDish->visibility =  1;
+        $newDish->slug = Str::of($newDish->name)->slug('-');
+        $newDish->path_img = 'dishes/tiramisu.jpg';
+        $newDish->save();
+
         $dishes = [
             // Restaurant 2: Bella Napoli
             ['restaurant_id' => 2, 'name' => "Pizza Margherita", 'description' => "Pizza classica napoletana con pomodoro San Marzano, mozzarella di bufala DOP e basilico fresco.", 'price' => 8.50,'path_img'=>'dishes/risotto-allo-zafferano.jpg'],
