@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Statistiche Ristorante</h1>
 
-        <form method="GET" action="{{ route('statistics') }}">
+        <form method="GET" action="{{ route('admin.statistics.index') }}">
             <div class="mb-3">
                 <label for="period">Periodo:</label>
                 <select id="period" name="period" onchange="this.form.submit()">

@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
 
     // STATISTICHE
-    Route::get('/statistiche', [StatisticController::class, 'index'])->name('statistics');
+    Route::get('/statistiche', [StatisticController::class, 'index'])->name('admin.statistics.index');
 });
 
 require __DIR__ . '/auth.php';
