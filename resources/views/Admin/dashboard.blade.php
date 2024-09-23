@@ -8,8 +8,8 @@
         {{-- --------------- --}}
 
         <div class="restaurant-info bg-white shadow-lg rounded-lg overflow-hidden">
-            <div class="bg-secondary text-white p-4">
-                <h2 class="text-2xl font-bold mb-0">Informazioni Ristorante</h2>
+            <div class="main-color text-black p-4">
+                <h2 class="text-2xl  font-bold mb-0">Informazioni Ristorante</h2>
             </div>
             <div class="p-4">
                 <div class="row">
@@ -44,7 +44,7 @@
                                     class="list-group-item d-flex justify-content-between align-items-center py-3 border-bottom">
                                     <div class="d-flex align-items-center">
                                         <i class="{{ $item['icon'] }} fa-fw text-primary me-3"></i>
-                                        <span class="font-weight-bold">{{ $item['label'] }}:</span>
+                                        <span class="font-weight-bold ">{{ $item['label'] }}:</span>
                                     </div>
                                     <span class="text-muted">{{ $item['value'] }}</span>
                                 </li>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="p-4 bg-light">
-                <a href="{{ route('restaurant.edit', $restaurant->slug) }}" class="btn btn-secondary btn-lg btn-block">
+                <a href="{{ route('restaurant.edit', $restaurant->slug) }}" class="btn main-color btn-lg btn-block">
                     <i class="fas fa-edit mr-2"></i> Modifica Dati
                 </a>
             </div>

@@ -3,7 +3,7 @@
     <div class="container">
         <h2 class="text-center py-3"><strong>Crea un nuovo piatto</strong></h2>
         <div class="d-flex justify-content-center py-3">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Torna al menù</a>
+            <a href="{{ route('dashboard') }}" class="btn main-color btn-lg">Torna al menù</a>
         </div>
 
         <section class="py-5">
@@ -62,7 +62,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Crea un nuovo piatto</button>
+                <button type="submit" class="btn main-color">Crea un nuovo piatto</button>
             </form>
         </section>
     </div>

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Registrazione') }}</div>
+                    <div class="card-header main-color">{{ __('Registrazione') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -143,7 +143,7 @@
                                 <div class="form-group row mb-3">
                                     <label class="col-md-4 col-form-label text-md-right" for="image">Immagine del
                                         ristorante</label>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ">
                                         <input type="file" name="image" id="image"
                                             class="form-control @error('image') is-invalid @enderror">
                                         @error('image')
@@ -184,7 +184,7 @@
                                 {{-- REGISTRATI --}}
                                 <div class="form-group row mb-0 my-2">
                                     <div class="col my-2 text-center">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn main-color">
                                             {{ __('Registrati') }}
                                         </button>
                                     </div>

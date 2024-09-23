@@ -3,7 +3,7 @@
     <div class="container">
         <h2 class="text-center py-3"><strong>Aggiorna piatto</strong></h2>
         <div class="d-flex justify-content-center py-3">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Torna al menù</a>
+            <a href="{{ route('dashboard') }}" class="btn main-color btn-lg">Torna al menù</a>
         </div>
 
         @if ($errors->any())
@@ -74,7 +74,7 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-primary">Aggiorna piatto</button>
+                <button type="submit" class="btn main-color">Aggiorna piatto</button>
             </form>
         </section>
     </div>

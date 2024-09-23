@@ -4,7 +4,7 @@
     <div class="container">
         <h2 class="text-center py-3"><strong>Modifica il tuo ristorante</strong></h2>
         <div class="d-flex justify-content-center py-3">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Torna al menù</a>
+            <a href="{{ route('dashboard') }}" class="btn main-color btn-lg">Torna al menù</a>
         </div>
 
         @if ($errors->any())
@@ -73,7 +73,7 @@
                     @endif
                 </div>
 
-                <button type="submit" class="btn btn-primary my-5">Aggiorna Ristorante</button>
+                <button type="submit" class="btn main-color my-5">Aggiorna Ristorante</button>
             </form>
         </section>
     </div>
