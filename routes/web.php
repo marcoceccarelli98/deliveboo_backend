@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\DishController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,11 +48,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dishes/{dish}', [DishController::class, 'destroy'])->name('dishes.destroy');
 
     // ORDERS
-    Route::resource('admin/orders', OrderController::class)->parameters([
+    Route::resource('/orders', OrderController::class)->parameters([
         'orders' => 'order:id'
     ])->names('admin.orders');
 
     Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+
+    // STATISTICHE
+    Route::get('/statistiche', [StatisticController::class, 'index'])->name('statistics');
 });
 
 require __DIR__ . '/auth.php';
