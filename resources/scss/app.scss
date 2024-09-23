@@ -10,6 +10,20 @@
     margin-top: 100px;
 }
 
-.main-color{
-    background-color: #00ccbc;;
-}
+
+.deliveroo-header {
+    background: linear-gradient(to right, white 50%, #00ccbb 50%);
+    position: relative;
+    
+  }
+  .deliveroo-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 48%;
+    width: 100px;
+    height: 100%;
+    background: #00ccbc;
+    transform: skew(-20deg);
+    
+  }

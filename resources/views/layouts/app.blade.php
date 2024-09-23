@@ -27,10 +27,10 @@
     <div id="app">
 
 
-        <nav class="position-fixed top-0 start-0 end-0 navbar navbar-expand-md navbar-light bg-white shadow-sm z-3 main-color">
+        <nav class="position-fixed top-0 start-0 end-0 navbar navbar-expand-md navbar-light  shadow-sm z-3 deliveroo-header">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center bold" href="{{ url('http://localhost:5174/') }}">
-                    DeliveBoo
+                <img src="{{ asset('logo.png') }}" alt="DeliveBoo Logo" class="logo-icon" height="50px">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -99,3 +99,4 @@
 </body>
 
 </html>
+

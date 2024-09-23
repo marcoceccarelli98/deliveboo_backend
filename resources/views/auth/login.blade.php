@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container text-center">
+    <div class="container text-center ">
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="container py-4 rounded-4" style="background-color: bisque; width:25rem;">
+            <div class="container py-4 rounded-4 " style="background-color: #00ccbcaa; width:30rem;">
 
                 <!-- Email Address -->
-                <div>
+                <div class="mt-4">
                     <x-input-label class="mx-3" for="email" :value="__('Email')" />
                     <x-text-input id="email" class="block mt-1 w-full rounded" type="email" name="email" :value="old('email')" required
                         autofocus autocomplete="username" />
@@ -44,7 +44,7 @@
                     </a>
                 @endif
 
-                <x-primary-button class="ms-3 bg-primary">
+                <x-primary-button class="ms-3 rounded" style="background-color: #00ccbc;">
                     {{ __('Accedi') }}
                 </x-primary-button>
             </div>
