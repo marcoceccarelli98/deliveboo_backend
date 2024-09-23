@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Order;
 use App\Models\Dish;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -52,72 +53,41 @@ class OrderController extends Controller
         }
     }
 
+    public function index()
+    {
+        // Assumiamo che l'utente autenticato abbia una relazione con il ristorante
+        $restaurant = auth()->user()->restaurant;
+
+        if (!$restaurant) {
+            // Gestisci il caso in cui l'utente non sia associato a un ristorante
+            return redirect()->route('home')->with('error', 'Non sei associato a nessun ristorante.');
+        }
+
+        $orders = Order::with('dishes')
+            ->whereHas('dishes', function ($query) use ($restaurant) {
+                $query->where('restaurant_id', $restaurant->id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.orders.index', compact('orders'));
+    }
+
     public function show(Order $order): JsonResponse
     {
         $order->load('dishes');
         return response()->json($order);
     }
 
-    // public function update(Request $request, Order $order): JsonResponse
-    // {
-    // $validatedData = $request->validate([
-    //     'status_order' => 'sometimes|string|max:20',
-    //     'status_payment' => 'sometimes|string|max:20',
-    //     'customer_name' => 'sometimes|string|max:30',
-    //     'customer_email' => 'sometimes|email|max:50',
-    //     'customer_address' => 'sometimes|string|max:30',
-    //     'total' => 'sometimes|numeric',
-    //     'dishes' => 'sometimes|array',
-    //     'dishes.*.id' => 'required_with:dishes|exists:dishes,id',
-    //     'dishes.*.quantity' => 'required_with:dishes|integer|min:1'
-    // ]);
-
-    // try {
-    //     DB::beginTransaction();
-
-    //     $order->update($validatedData);
-
-    //     if (isset($validatedData['dishes'])) {
-    //         $order->dishes()->detach();
-    //         foreach ($validatedData['dishes'] as $dish) {
-    //             $order->dishes()->attach($dish['id'], ['quantity' => $dish['quantity']]);
-    //         }
-    //     }
-
-    //     DB::commit();
-
-    //     $order->load('dishes');
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Ordine aggiornato con successo',
-    //         'order' => $order
-    //     ]);
-    // } catch (\Exception $e) {
-    //     DB::rollBack();
-    //     return response()->json([
-    //         'success' => false,
-    //         'message' => 'Si è verificato un errore durante l\'aggiornamento dell\'ordine',
-    //         'error' => $e->getMessage()
-    //     ], 500);
-    // }
-    // }
-
-    public function destroy(Order $order): JsonResponse
+    public function destroy(Order $order)
     {
         try {
             $order->dishes()->detach();
             $order->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Ordine eliminato con successo'
-            ]);
+            return redirect()->route('admin.orders.index')->with('message', 'ordine eliminato correttamente');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Si è verificato un errore durante l\'eliminazione dell\'ordine',
-                'error' => $e->getMessage()
-            ], 500);
+            return redirect()->route('admin.orders.index')->with('message', 'Errore durante la cancellazione dell\'ordine' + $e);
         }
     }
 }

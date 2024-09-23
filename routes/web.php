@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\DishController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,12 +46,12 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/dishes/{dish}', [DishController::class, 'destroy'])->name('dishes.destroy');
 
-    // Route::get('/dishes/{dish:slug}/edit', [DishController::class, 'edit'])->name('dishes.edit');
+    // ORDERS
+    Route::resource('admin/orders', OrderController::class)->parameters([
+        'orders' => 'order:id'
+    ])->names('admin.orders');
 
-    // Route::get('/dishes/create', [DishController::class, 'create'])->name('dishes.create');
-
-    // Route::get('/dish/{dish}/edit', [DishController::class, 'edit'])->name('dish.edit');
-    // Route::patch('/dish/{dish}', [DishController::class, 'update'])->name('dish.update');
+    Route::delete('/admin/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
 });
 
 require __DIR__ . '/auth.php';
