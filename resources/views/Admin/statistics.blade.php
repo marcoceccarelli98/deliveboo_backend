@@ -1,55 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Statistiche Ristorante</h1>
+    <div class="container py-5">
+        <h1 class="mb-4">Statistiche Ristorante</h1>
 
-        <form method="GET" action="{{ route('admin.statistics.index') }}">
-            <div class="mb-3">
+        <form method="GET" action="{{ route('admin.statistics.index') }}" class="mb-4">
+            <div class="form-group">
                 <label for="period">Periodo:</label>
-                <select id="period" name="period" onchange="this.form.submit()">
+                <select id="period" name="period" class="form-control" onchange="this.form.submit()">
                     <option value="mensile" {{ $period == 'mensile' ? 'selected' : '' }}>Mensile</option>
                     <option value="annuale" {{ $period == 'annuale' ? 'selected' : '' }}>Annuale</option>
                 </select>
             </div>
         </form>
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-6">
-                <canvas id="statsChart"></canvas>
-            </div>
-            <div class="col-md-6">
-                @if ($hasDishesData)
-                    <canvas id="pieChart"></canvas>
-                @else
-                    <div class="alert alert-info">
-                        <h4>Nessun dato disponibile per i piatti</h4>
-                        <p>Non ci sono ancora ordini registrati per i piatti. Il grafico sarà disponibile quando ci saranno
-                            dati sufficienti.</p>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Andamento Ordini e Incassi
                     </div>
-                @endif
+                    <div class="card-body">
+                        <canvas id="statsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Statistiche Aggiuntive -->
+                <div class="card">
+                    <div class="card-header">
+                        Statistiche Aggiuntive
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Media ordini giornaliera</h5>
+                                <p class="h4">{{ number_format($averageDailyOrders, 2) }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Valore medio dell'ordine</h5>
+                                <p class="h4">€{{ number_format($averageOrderValue, 2) }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Piatto più popolare</h5>
+                                <p class="h4">{{ $mostPopularDish->name ?? 'N/A' }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Tasso clienti abituali</h5>
+                                <p class="h4">{{ number_format($returningCustomersRate, 2) }}%</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Confronto con il periodo precedente</h5>
+                                <p>Ordini: <span
+                                        class="h5 {{ $orderGrowth >= 0 ? 'text-success' : 'text-danger' }}">{{ $orderGrowth >= 0 ? '+' : '' }}{{ number_format($orderGrowth, 2) }}%</span>
+                                </p>
+                                <p>Fatturato: <span
+                                        class="h5 {{ $revenueGrowth >= 0 ? 'text-success' : 'text-danger' }}">{{ $revenueGrowth >= 0 ? '+' : '' }}{{ number_format($revenueGrowth, 2) }}%</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+                <div class="card flex-grow-1">
+                    <div class="card-header">
+                        Top 10 Piatti Ordinati
+                    </div>
+                    <div class="card-body">
+                        @if ($hasDishesData)
+                            <canvas id="pieChart"></canvas>
+                        @else
+                            <div class="alert alert-info">
+                                <h4 class="alert-heading">Nessun dato disponibile per i piatti</h4>
+                                <p class="mb-0">Non ci sono ancora ordini registrati per i piatti. Il grafico sarà
+                                    disponibile quando ci saranno dati sufficienti.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Tabella dei dati grezzi -->
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th>{{ $period == 'mensile' ? 'Mese' : 'Anno' }}</th>
-                    <th>Totale Ordini</th>
-                    <th>Totale Incasso</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($stats as $stat)
-                    <tr>
-                        <td>{{ $stat->{$period == 'mensile' ? 'mese' : 'anno'} }}</td>
-                        <td>{{ $stat->totale_ordini }}</td>
-                        <td>€{{ number_format($stat->totale_incasso, 2) }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-header">
+                Dati Dettagliati
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ $period == 'mensile' ? 'Mese' : 'Anno' }}</th>
+                                <th>Totale Ordini</th>
+                                <th>Totale Incasso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($stats as $stat)
+                                <tr>
+                                    <td>{{ $stat->{$period == 'mensile' ? 'mese' : 'anno'} }}</td>
+                                    <td>{{ $stat->totale_ordini }}</td>
+                                    <td>€{{ number_format($stat->totale_incasso, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('scripts')
@@ -85,6 +147,7 @@
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -93,7 +156,6 @@
                     }
                 });
 
-                // Grafico a torta per le percentuali dei piatti
                 @if ($hasDishesData)
                     var pieCtx = document.getElementById('pieChart').getContext('2d');
                     var dishesData = @json($dishesData);
