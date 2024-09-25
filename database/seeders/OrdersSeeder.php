@@ -15,7 +15,7 @@ class OrdersSeeder extends Seeder
     {
         $faker = Faker::create('it_IT');
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $newOrder = new Order();
             $newOrder->restaurant_id = 1; // Assumiamo che tutti gli ordini siano per il ristorante con ID 1
             $newOrder->customer_name = $faker->name;
